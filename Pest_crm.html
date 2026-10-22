@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pest control sign-up → CRM demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1ec;--panel:#fbfcfa;--ink:#16241d;--mute:#5b6b62;--line:#d3dbd3;--pine:#1f4a38;--pine-ink:#fff;--amber:#e3a21a;--amber-soft:#fbefcf;--ok:#2a7a4b;--err:#b3361f;--code:#12201a;--code-ink:#cfe6d8;
+color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1713;--panel:#17221c;--ink:#e6efe9;--mute:#98a99f;--line:#2b3b32;--pine:#5fb88a;--pine-ink:#0c1a13;--amber:#f0b73a;--amber-soft:#3a2f0f;--ok:#6fd09a;--err:#ff8d78;--code:#0a110d;--code-ink:#bfe0cd;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1713;--panel:#17221c;--ink:#e6efe9;--mute:#98a99f;--line:#2b3b32;--pine:#5fb88a;--pine-ink:#0c1a13;--amber:#f0b73a;--amber-soft:#3a2f0f;--ok:#6fd09a;--err:#ff8d78;--code:#0a110d;--code-ink:#bfe0cd;color-scheme:dark}
+*{box-sizing:border-box}html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Instrument Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;margin:0;line-height:1.15}
+.top{max-width:1180px;margin:0 auto;padding:28px 20px 8px}
+.top h1{font-size:clamp(26px,4vw,38px);font-weight:700;max-width:22ch}
+.top p{color:var(--mute);margin:10px 0 0;max-width:62ch}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 20px 48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.wrap{grid-template-columns:1fr}}
+.pane{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pane>header{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pane>header h2{font-size:19px}.pane>header span{color:var(--mute);font-size:14px}
+.body{padding:18px}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--pine);color:var(--pine-ink);display:grid;place-items:center;font:700 17px "Bricolage Grotesque",sans-serif}
+.brand b{font:700 18px "Bricolage Grotesque",sans-serif}
+.lead{color:var(--mute);margin:0 0 16px}
+label{display:block;font-weight:500;font-size:14px;margin:0 0 5px}
+.f{margin-bottom:13px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
+input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:64px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,.chip input:focus-visible+span{outline:3px solid var(--amber);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}.chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chip span{display:block;padding:7px 13px;border:1px solid var(--line);border-radius:99px;background:var(--bg);font-size:14px}
+.chip input:checked+span{background:var(--pine);color:var(--pine-ink);border-color:var(--pine)}
+.err{color:var(--err);font-size:13px;min-height:0;margin-top:4px}
+.bad{border-color:var(--err)!important}
+.check{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:var(--mute);margin:4px 0 16px}
+.check input{margin-top:4px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+button{font:600 15px "Instrument Sans",sans-serif;border-radius:9px;padding:11px 18px;cursor:pointer;border:1px solid var(--pine)}
+.primary{background:var(--pine);color:var(--pine-ink)}.ghost{background:transparent;color:var(--pine)}
+button:disabled{opacity:.55;cursor:default}
+.done{display:none;padding:18px;background:var(--amber-soft);border-radius:10px;margin-top:14px}
+.done.on{display:block}.done h3{font-size:18px;margin-bottom:4px}
+.crmbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.crmbar select{width:auto}
+.steps{display:flex;flex-direction:column;gap:7px;margin:0 0 16px;padding:0;list-style:none}
+.steps li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--mute)}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);flex:none;transition:.2s}
+.steps li.on{color:var(--ink)}.steps li.on .dot{border-color:var(--amber);background:var(--amber)}
+.steps li.ok{color:var(--ink)}.steps li.ok .dot{border-color:var(--ok);background:var(--ok)}
+h3.sub{font-size:15px;margin:0 0 8px}
+pre{margin:0 0 16px;background:var(--code);color:var(--code-ink);padding:13px;border-radius:10px;overflow-x:auto;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;max-width:100%}
+.ep{font:13px ui-monospace,Menlo,Consolas,monospace;color:var(--mute);margin:0 0 6px;overflow-wrap:anywhere}
+.cards{display:flex;flex-direction:column;gap:9px}
+.empty{color:var(--mute);border:1px dashed var(--line);border-radius:10px;padding:16px;font-size:14px}
+.card{border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:10px;padding:11px 13px;background:var(--bg)}
+.card.hot{border-left-color:var(--amber)}
+.card.new{animation:pop .5s ease}
+@keyframes pop{from{transform:scale(.97);box-shadow:0 0 0 3px var(--amber)}to{transform:none;box-shadow:0 0 0 0 transparent}}
+.card b{font-family:"Bricolage Grotesque",sans-serif;font-size:16px}
+.card .m{color:var(--mute);font-size:13px;margin-top:2px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.tag{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--line);color:var(--ink)}
+.tag.p{background:var(--amber);color:#2a1d00}
+.note{font-size:13px;color:var(--mute);margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card.new{animation:none}.dot{transition:none}}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>Customer signs up, your CRM gets the lead</h1>
+  <p>Fill out the form on the left like a customer would. The right side shows what your office sees: the lead is validated, mapped to your CRM’s fields, and added to the pipeline with a tech and priority already assigned.</p>
+</div>
+<div class="wrap">
+  <section class="pane" aria-labelledby="h-form">
+    <header><h2 id="h-form">What the customer sees</h2><span>Your website or QR code</span></header>
+    <div class="body">
+      <div class="brand"><div class="logo">H</div><b>Hollow Oak Pest Control</b></div>
+      <p class="lead">Tell us what you’re dealing with and we’ll call to book your first visit.</p>
+      <div id="formbox">
+        <div class="row">
+          <div class="f"><label for="first">First name</label><input type="text" id="first" autocomplete="given-name"><div class="err" data-for="first"></div></div>
+          <div class="f"><label for="last">Last name</label><input type="text" id="last" autocomplete="family-name"><div class="err" data-for="last"></div></div>
+        </div>
+        <div class="row">
+          <div class="f"><label for="phone">Mobile phone</label><input type="tel" id="phone" autocomplete="tel" placeholder="(973) 555-0142"><div class="err" data-for="phone"></div></div>
+          <div class="f"><label for="email">Email</label><input type="email" id="email" autocomplete="email"><div class="err" data-for="email"></div></div>
+        </div>
+        <div class="row">
+          <div class="f"><label for="addr">Service address</label><input type="text" id="addr" autocomplete="street-address"><div class="err" data-for="addr"></div></div>
+          <div class="f"><label for="zip">ZIP code</label><input type="text" id="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code"><div class="err" data-for="zip"></div></div>
+        </div>
+        <div class="f"><label id="pl">What’s the problem?</label>
+          <div class="chips" role="group" aria-labelledby="pl">
+            <label class="chip"><input type="checkbox" name="pest" value="Ants"><span>Ants</span></label>
+            <label class="chip"><input type="checkbox" name="pest" value="Roaches"><span>Roaches</span></label>
+            <label class="chip"><input type="checkbox" name="pest" value="Rodents"><span>Rodents</span></label>
+            <label class="chip"><input type="checkbox" name="pest" value="Termites"><span>Termites</span></label>
+            <label class="chip"><input type="checkbox" name="pest" value="Bed bugs"><span>Bed bugs</span></label>
+            <label class="chip"><input type="checkbox" name="pest" value="Wasps"><span>Wasps</span></label>
+            <label class="chip"><input type="checkbox" name="pest" value="Not sure"><span>Not sure</span></label>
+          </div><div class="err" data-for="pest"></div></div>
+        <div class="row">
+          <div class="f"><label for="ptype">Property type</label><select id="ptype"><option>Home</option><option>Apartment</option><option>Business</option></select></div>
+          <div class="f"><label for="when">How soon?</label><select id="when"><option value="routine">This month</option><option value="week">This week</option><option value="urgent">Today if possible</option></select></div>
+        </div>
+        <div class="f"><label for="notes">Anything else we should know? (optional)</label><textarea id="notes"></textarea></div>
+        <label class="check"><input type="checkbox" id="consent"><span>It’s OK to text and call me about this request.</span></label>
+        <div class="err" data-for="consent" style="margin:-10px 0 12px"></div>
+        <div class="btns"><button class="primary" id="go" type="button">Request my service</button><button class="ghost" id="fill" type="button">Fill sample customer</button></div>
+      </div>
+      <div class="done" id="done" role="status"><h3>Request received</h3><p style="margin:0">Thanks, <span id="dname"></span>. A technician will call you <span id="dwhen"></span>.</p><div class="btns" style="margin-top:12px"><button class="ghost" id="again" type="button">Submit another</button></div></div>
+    </div>
+  </section>
+
+  <section class="pane" aria-labelledby="h-crm">
+    <header><h2 id="h-crm">What your office sees</h2><span>Live CRM view</span></header>
+    <div class="body">
+      <div class="crmbar"><label for="crm" style="margin:0">Send leads to</label>
+        <select id="crm"><option value="hubspot">HubSpot</option><option value="salesforce">Salesforce</option><option value="webhook">Zapier / Make webhook</option></select></div>
+      <ul class="steps" id="steps">
+        <li data-s="0"><i class="dot"></i>Form received</li>
+        <li data-s="1"><i class="dot"></i>Contact details checked</li>
+        <li data-s="2"><i class="dot"></i>Mapped to CRM fields and routed to a tech</li>
+        <li data-s="3"><i class="dot"></i>Lead created in CRM</li>
+      </ul>
+      <h3 class="sub">Request sent to the CRM</h3>
+      <div class="ep" id="ep">Waiting for a submission…</div>
+      <pre id="payload">{ }</pre>
+      <h3 class="sub">New leads pipeline</h3>
+      <div class="cards" id="cards"><div class="empty" id="empty">No leads yet. Submit the form to see one arrive.</div></div>
+      <p class="note">This is a simulation: nothing leaves this page. To go live, your form posts the same payload to your CRM’s API or a webhook, and the routing rules (priority by urgency, tech by ZIP) run before the call.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var TECHS={"07":"Marcus (Essex County)","10":"Dana (NYC metro)","08":"Priya (Central NJ)"};
+var count=0,busy=false;
+function techFor(zip){return TECHS[zip.slice(0,2)]||"Open dispatch queue"}
+function serviceLine(p){
+  if(p.indexOf("Termites")>-1)return "Termite inspection";
+  if(p.indexOf("Rodents")>-1)return "Rodent exclusion";
+  if(p.indexOf("Bed bugs")>-1)return "Bed bug treatment";
+  return "General pest";
+}
+function err(k,m){var e=document.querySelector('[data-for="'+k+'"]');if(e)e.textContent=m||"";var i=$(k);if(i)i.classList.toggle("bad",!!m)}
+function read(){
+  var pests=[].map.call(document.querySelectorAll('input[name=pest]:checked'),function(c){return c.value});
+  return {first:$("first").value.trim(),last:$("last").value.trim(),phone:$("phone").value.trim(),email:$("email").value.trim(),addr:$("addr").value.trim(),zip:$("zip").value.trim(),pests:pests,ptype:$("ptype").value,when:$("when").value,notes:$("notes").value.trim(),consent:$("consent").checked};
+}
+function validate(d){
+  var ok=true;
+  function chk(k,c,m){if(c){err(k,"");}else{err(k,m);ok=false}}
+  chk("first",d.first,"Enter your first name.");
+  chk("last",d.last,"Enter your last name.");
+  chk("phone",d.phone.replace(/\D/g,"").length>=10,"Enter a 10-digit phone number.");
+  chk("email",/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email),"Enter an email like name@example.com.");
+  chk("addr",d.addr,"Enter the address we’ll visit.");
+  chk("zip",/^\d{5}$/.test(d.zip),"Enter a 5-digit ZIP code.");
+  chk("pest",d.pests.length,"Pick at least one option.");
+  chk("consent",d.consent,"Check the box so we’re allowed to contact you.");
+  return ok;
+}
+function build(d,crm){
+  var priority=d.when==="urgent"?"High":d.when==="week"?"Medium":"Normal";
+  var line=serviceLine(d.pests),tech=techFor(d.zip),issue=d.pests.join(", ");
+  var r={priority:priority,line:line,tech:tech,issue:issue};
+  if(crm==="hubspot"){
+    r.ep="POST https://api.hubapi.com/crm/v3/objects/contacts";
+    r.body={properties:{firstname:d.first,lastname:d.last,phone:d.phone,email:d.email,address:d.addr,zip:d.zip,hs_lead_status:"NEW",pest_issue:issue,service_line:line,lead_priority:priority,hubspot_owner:tech,property_type:d.ptype,message:d.notes}};
+  }else if(crm==="salesforce"){
+    r.ep="POST https://yourorg.my.salesforce.com/services/data/v59.0/sobjects/Lead";
+    r.body={FirstName:d.first,LastName:d.last,Phone:d.phone,Email:d.email,Street:d.addr,PostalCode:d.zip,LeadSource:"Web sign-up",Status:"New",Rating:priority==="High"?"Hot":priority==="Medium"?"Warm":"Cold",Description:issue+" ("+d.ptype+"). "+d.notes,Owner:tech};
+  }else{
+    r.ep="POST https://hooks.zapier.com/hooks/catch/000000/abcdef/";
+    r.body={customer:{name:d.first+" "+d.last,phone:d.phone,email:d.email},location:{address:d.addr,zip:d.zip,type:d.ptype},request:{pests:d.pests,service_line:line,urgency:d.when,notes:d.notes},routing:{priority:priority,assigned_to:tech},consent_to_contact:true};
+  }
+  return r;
+}
+function setStep(n,state){var li=document.querySelector('#steps li[data-s="'+n+'"]');li.className=state}
+function resetSteps(){for(var i=0;i<4;i++)setStep(i,"")}
+function addCard(d,r){
+  var e=$("empty");if(e)e.remove();
+  var c=document.createElement("div");c.className="card new"+(r.priority==="High"?" hot":"");
+  var b=document.createElement("b");b.textContent=d.first+" "+d.last;
+  var m=document.createElement("div");m.className="m";m.textContent=r.issue+" · "+d.addr+", "+d.zip;
+  var t=document.createElement("div");t.className="tags";
+  [[r.priority+" priority",r.priority==="High"],[r.line,0],["Assigned: "+r.tech,0],[d.ptype,0]].forEach(function(x){var s=document.createElement("span");s.className="tag"+(x[1]?" p":"");s.textContent=x[0];t.appendChild(s)});
+  c.appendChild(b);c.appendChild(m);c.appendChild(t);
+  $("cards").insertBefore(c,$("cards").firstChild);
+  setTimeout(function(){c.classList.remove("new")},700);
+}
+function submit(){
+  if(busy)return;var d=read();if(!validate(d))return;
+  busy=true;$("go").disabled=true;resetSteps();
+  var r=build(d,$("crm").value);
+  $("ep").textContent=r.ep;$("payload").textContent=JSON.stringify(r.body,null,2);
+  var seq=[0,1,2,3];
+  seq.forEach(function(i){
+    setTimeout(function(){setStep(i,"on")},i*650);
+    setTimeout(function(){setStep(i,"ok")},i*650+500);
+  });
+  setTimeout(function(){
+    addCard(d,r);
+    $("dname").textContent=d.first;
+    $("dwhen").textContent=d.when==="urgent"?"within the hour":d.when==="week"?"within one business day":"within two business days";
+    $("formbox").style.display="none";$("done").classList.add("on");
+    busy=false;$("go").disabled=false;
+  },4*650);
+}
+function fill(){
+  var s={first:"Jordan",last:"Rivera",phone:"(973) 555-0142",email:"jordan.rivera@example.com",addr:"48 Maple Ave, Montclair",zip:"07042",notes:"Saw droppings near the dishwasher. Have a dog."};
+  Object.keys(s).forEach(function(k){$(k).value=s[k]});
+  document.querySelectorAll('input[name=pest]').forEach(function(c){c.checked=c.value==="Rodents"});
+  $("when").value="urgent";$("consent").checked=true;
+}
+$("go").addEventListener("click",submit);
+$("fill").addEventListener("click",fill);
+$("again").addEventListener("click",function(){
+  $("done").classList.remove("on");$("formbox").style.display="";
+  ["first","last","phone","email","addr","zip","notes"].forEach(function(k){$(k).value=""});
+  document.querySelectorAll('input[name=pest]').forEach(function(c){c.checked=false});
+  $("consent").checked=false;$("when").value="routine";resetSteps();
+});
+$("crm").addEventListener("change",function(){
+  var d=read();if($("payload").textContent.trim()==="{ }"||!d.first)return;
+  if(!validate(d))return;var r=build(d,$("crm").value);
+  $("ep").textContent=r.ep;$("payload").textContent=JSON.stringify(r.body,null,2);
+});
+})();
+</script>
+</body>
+</html>
